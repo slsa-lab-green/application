@@ -35,7 +35,6 @@ jobs:
             ${{ env.IMAGE }}:${{ github.run_number }}
           build-args: |
             TEAM=${{ github.repository_owner }}
-            COLOR=${{ secrets.TEAM_COLOR }}
 
       - name: Update k8s manifest with new image tag
         run: |
