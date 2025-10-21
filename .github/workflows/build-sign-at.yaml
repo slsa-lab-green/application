@@ -46,9 +46,9 @@ jobs:
 
       - name: Update k8s manifest with new image tag
         run: |
+          cd other
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          cd other
           sed -i "s|image: .*|image: ${{ env.IMAGE }}:${{ vars.run_number }}|" k8s/deployment.yaml || true
           git add k8s/deployment.yaml || true
           git commit -m "ci: update image to ${{ vars.run_number }}" || true
