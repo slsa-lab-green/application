@@ -40,7 +40,7 @@ jobs:
       - name: Checkout another repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ vars.repository_owner }}/application
+          repository: ${{ vars.repository_owner_at }}/application
           path: other
           token: ${{ secrets.G_TOKEN }}
 
