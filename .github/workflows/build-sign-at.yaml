@@ -37,10 +37,18 @@ jobs:
             TEAM=${{ vars.repository_owner }}
             COLOR=${{ secrets.TEAM_COLOR }}
 
+      - name: Checkout another repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.repository_owner }}/application
+          path: other
+          token: ${{ secrets.G_TOKEN }}
+
       - name: Update k8s manifest with new image tag
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+          cd other
           sed -i "s|image: .*|image: ${{ env.IMAGE }}:${{ vars.run_number }}|" k8s/deployment.yaml || true
           git add k8s/deployment.yaml || true
           git commit -m "ci: update image to ${{ vars.run_number }}" || true
