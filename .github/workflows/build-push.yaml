@@ -72,7 +72,7 @@ jobs:
         env:
           DIGEST: ${{ steps.push.outputs.digest }}
         run: |
-          cosign sign --yes --keyless \
+          cosign sign --yes \
             ${{ env.IMAGE }}@${DIGEST}
       
       # sbom.json 파일을 이미지에 증명용으로 첨부
@@ -81,7 +81,7 @@ jobs:
         env:
           DIGEST: ${{ steps.push.outputs.digest }}
         run: |
-          cosign attest --yes --keyless \
+          cosign attest --yes \
             --predicate sbom.json \
             --type cyclonedx \
             ${{ env.IMAGE }}@${DIGEST}
