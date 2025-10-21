@@ -6,6 +6,8 @@ ARG COLOR="#333333"
 LABEL maintainer="slsa-lab@example.com"
 LABEL team=${TEAM}
 
+RUN apk update && apk upgrade --no-cache
+
 RUN mkdir -p /usr/share/nginx/html
 RUN printf '\
 <!doctype html>\n\
