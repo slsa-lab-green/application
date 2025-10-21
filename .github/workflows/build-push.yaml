@@ -72,7 +72,7 @@ jobs:
         env:
           DIGEST: ${{ steps.push.outputs.digest }}
         run: |
-          cosign sign --yes \
+          cosign sign --yes --keyless \
             ${{ env.IMAGE }}@${DIGEST}
       
       # sbom.json 파일을 이미지에 증명용으로 첨부
@@ -81,7 +81,7 @@ jobs:
         env:
           DIGEST: ${{ steps.push.outputs.digest }}
         run: |
-          cosign attest --yes \
+          cosign attest --yes --keyless \
             --predicate sbom.json \
             --type cyclonedx \
             ${{ env.IMAGE }}@${DIGEST}
@@ -90,7 +90,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          sed -i "s|image: .*|image: ${{ env.IMAGE }}:sha-${{ github.sha }}|" k8s/deployment.yaml || true
-          git add k8s/deployment.yaml || true
-          git commit -m "ci: update verified image to sha-${{ github.sha }}" || true
-          git push || true
+          sed -i "s|image: .*|image: ${{ env.IMAGE }}:sha-${{ github.sha }}|" k8s/deployment.yaml
+          git add k8s/deployment.yaml
+          git commit -m "ci: update verified image to sha-${{ github.sha }}"
+          git push
