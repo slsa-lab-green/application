@@ -40,7 +40,7 @@ jobs:
       - name: Checkout another repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ vars.repository_owner_at }}/application
+          repository: ${{ vars.repository_owner }}/application
           path: other
           token: ${{ secrets.G_TOKEN }}
 
@@ -49,7 +49,7 @@ jobs:
           cd other
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          sed -i "s|image: .*|image: ghcr.io/${{ vars.repository_owner_at }}/application:${{ vars.run_number }}|" k8s/deployment.yaml || true
+          sed -i "s|image: .*|image: ${{ vars.IMAGE }}:${{ vars.run_number }}|" k8s/deployment.yaml || true
           git add k8s/deployment.yaml || true
           git commit -m "ci: update image to ${{ vars.run_number }}" || true
           git push || true
