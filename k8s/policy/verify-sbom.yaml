@@ -1,0 +1,41 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-sbom
+
+spec:
+  validationFailureAction: Enforce
+  failurePolicy: Fail
+  
+  rules:
+  - name: check-sbom-attestation
+    
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - kube-system
+          - kube-public
+          - kube-node-lease
+          - kyverno
+    
+    verifyImages:
+    - imageReferences:
+      - "ghcr.io/slsa-lab-green:*"
+      
+      attestations:
+      - predicateType: https://cyclonedx.org/schema
+        attestors:
+        - entries:
+          - keyless:
+              url: https://fulcio.sigstore.dev
+              issuer: "https://token.actions.githubusercontent.com"
+              subject: "repo:slsa-lab-green/application/.*"
+              rekor:
+                url: https://rekor.sigstore.dev
