@@ -35,7 +35,7 @@ jobs:
             ${{ env.IMAGE }}:${{ vars.run_number }}
           build-args: |
             TEAM=${{ vars.repository_owner }}
-            COLOR=${{ secrets.TEAM_COLOR }}
+            COLOR=${{ vars.TEAM_COLOR }}
 
       - name: Checkout another repo
         uses: actions/checkout@v4
