@@ -110,10 +110,8 @@ jobs:
                 APP_REPO=$(echo "$ORG_REPOS" | jq -r '.[] | select(.name == "application") | .full_name' | head -1)
                 
                 if [ -n "$APP_REPO" ]; then
-                  SCAN_TARGETS="$SCAN_TARGETS
-$ORG"
-                  TARGET_REPOS="$TARGET_REPOS
-$APP_REPO"
+                  SCAN_TARGETS="$SCAN_TARGETS"$'\n'"$ORG"
+                  TARGET_REPOS="$TARGET_REPOS"$'\n'"$APP_REPO"
                 fi
               fi
             done
