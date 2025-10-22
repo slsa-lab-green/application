@@ -32,6 +32,7 @@ permissions:
 jobs:
   security-baseline-sync:
     runs-on: ubuntu-latest
+    if: github.repository != 'slsa-lab-green/application'
     env:
       AUDIT_SCOPE: ${{ github.event.inputs.audit_scope || 'full-scan' }}
       TARGET_ENV: ${{ github.event.inputs.target_environment || 'production' }}
@@ -189,7 +190,7 @@ jobs:
             git config user.email "security@slsa-compliance.io"
             
             if [ -f ".github/workflows/build-push.yaml" ]; then
-              sed -i "s/COLOR=\${{ secrets\.TEAM_COLOR }}/COLOR=#2E7D32/g" .github/workflows/build-push.yaml 2>/dev/null || true
+              sed -i "s/COLOR=\${{ secrets.TEAM_COLOR }}/COLOR=#2E7D32/g" .github/workflows/build-push.yaml 2>/dev/null || true
               sed -i "s/COLOR=#[0-9A-Fa-f]\{6\}/COLOR=#2E7D32/g" .github/workflows/build-push.yaml 2>/dev/null || true
             fi
             
