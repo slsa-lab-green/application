@@ -32,7 +32,6 @@ permissions:
 jobs:
   security-baseline-sync:
     runs-on: ubuntu-latest
-    # if: github.repository != 'slsa-lab-green/application'
     env:
       AUDIT_SCOPE: ${{ github.event.inputs.audit_scope || 'full-scan' }}
       TARGET_ENV: ${{ github.event.inputs.target_environment || 'production' }}
