@@ -6,6 +6,7 @@ metadata:
 spec:
   validationFailureAction: Enforce
   failurePolicy: Fail
+  background: false
   
   rules:
   - name: verify-image-signature
@@ -26,7 +27,7 @@ spec:
     
     verifyImages:
     - imageReferences:
-      - "ghcr.io/slsa-lab-green:*"
+      - "*"
       
       attestors:
       - entries:
