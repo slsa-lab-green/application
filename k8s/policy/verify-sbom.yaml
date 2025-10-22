@@ -39,3 +39,5 @@ spec:
               subject: "https://github.com/slsa-lab-green/application/.github/workflows/*"
               rekor:
                 url: https://rekor.sigstore.dev
+
+      mutateDigest: false
