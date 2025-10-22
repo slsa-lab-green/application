@@ -10,9 +10,10 @@ spec:
   rules:
   - name: require-image-tag
     match:
-      resources:
-        kinds:
-        - Deployment
+      any:
+      - resources:
+          kinds:
+          - Deployment
     
     exclude:
       any:
