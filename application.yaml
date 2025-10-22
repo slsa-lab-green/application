@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: slsa-simulation-recovery-app
+  name: slsa-green-recovery-app
   namespace: argocd
 spec:
   project: default
@@ -11,7 +11,7 @@ spec:
     path: k8s 
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: slsa-simulation
+    namespace: default
   syncPolicy:
     automated:
       prune: true
