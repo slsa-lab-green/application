@@ -33,7 +33,7 @@ spec:
       - entries:
         - keyless:
             issuer: "https://token.actions.githubusercontent.com"
-            subject: "repo:slsa-lab-green/application/.*"
+            subject: "https://github.com/slsa-lab-green/application/.github/workflows/*"
             rekor:
               url: https://rekor.sigstore.dev
       

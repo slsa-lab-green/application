@@ -73,7 +73,7 @@ jobs:
           DIGEST: ${{ steps.push.outputs.digest }}
         run: |
           cosign sign --yes \
-            ${{ env.IMAGE }}@${DIGEST}
+            ${{ env.IMAGE }}:sha-${{ github.sha }}
       
       # sbom.json 파일을 이미지에 증명용으로 첨부
       # 이미지 내부에 GHCR 메타데이터로 구성요소들이 남아있음
@@ -84,7 +84,7 @@ jobs:
           cosign attest --yes \
             --predicate sbom.json \
             --type cyclonedx \
-            ${{ env.IMAGE }}@${DIGEST}
+            ${{ env.IMAGE }}:sha-${{ github.sha }}
 
       - name: Update k8s manifest with new image tag
         run: |
