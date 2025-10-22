@@ -31,7 +31,7 @@ spec:
       - "*"
       
       attestations:
-      - type: https://cyclonedx.org/schema
+      - type: https://cyclonedx.org/bom
         attestors:
         - entries:
           - keyless:
