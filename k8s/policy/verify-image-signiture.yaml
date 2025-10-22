@@ -31,7 +31,6 @@ spec:
       attestors:
       - entries:
         - keyless:
-            url: https://fulcio.sigstore.dev
             issuer: "https://token.actions.githubusercontent.com"
             subject: "repo:slsa-lab-green/application/.*"
             rekor:
