@@ -1,0 +1,12 @@
+kind: RoleBinding
+metadata:
+  name: argocd-controller-dev
+  namespace: dev
+roleRef:
+  kind: Role
+  name: argocd-rbac-manager
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: argocd-application-controller
+    namespace: argocd
