@@ -34,6 +34,7 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:latest
             ${{ env.IMAGE }}:${{ vars.run_number }}
+            ${{ env.IMAGE }}:sha-${{ github.sha }}
           build-args: |
             TEAM=${{ vars.repository_owner }}
             COLOR=${{ vars.TEAM_COLOR }}
@@ -61,7 +62,7 @@ jobs:
           cd other
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          sed -i "s|image: .*|image: ghcr.io/${{ vars.repository_owner }}/application:${{ vars.run_number }}|" k8s/deployment.yaml || true
+          sed -i "s|image: .*|image: ghcr.io/${{ vars.repository_owner }}/application:sha-${{ github.sha }}|" k8s/deployment.yaml || true
           git add k8s/deployment.yaml || true
           git commit -m "ci: update image to ${{ vars.run_number }}" || true
           git push || true
