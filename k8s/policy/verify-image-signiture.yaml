@@ -37,5 +37,4 @@ spec:
             rekor:
               url: https://rekor.sigstore.dev
       
-      mutateDigest: false
       required: true
