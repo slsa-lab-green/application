@@ -24,3 +24,4 @@ spec:
           maxDuration: 3m
     syncOptions:
         - Replace=true 
+        - AllowEmpty=true
