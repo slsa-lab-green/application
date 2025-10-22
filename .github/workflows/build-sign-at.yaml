@@ -27,6 +27,7 @@ jobs:
 
       - name: Build and push image
         uses: docker/build-push-action@v4
+        id: push
         with:
           context: .
           push: true
@@ -36,6 +37,17 @@ jobs:
           build-args: |
             TEAM=${{ vars.repository_owner }}
             COLOR=${{ vars.TEAM_COLOR }}
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      # 이미지 서명 (keyless)
+      - name: Sign Container Image
+        env:
+          DIGEST: ${{ steps.push.outputs.digest }}
+        run: |
+          cosign sign --yes \
+            ${{ env.IMAGE }}@${DIGEST}
 
       - name: Checkout another repo
         uses: actions/checkout@v4
