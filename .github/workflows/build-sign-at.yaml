@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write   # k8s manifest 수정용 (이미지 갱신)
+  id-token: write   # keyless 서명용
+  packages: write   # GHCR push 권한
 
 jobs:
   build-and-push:
