@@ -90,7 +90,9 @@ jobs:
       - name: Verify image base
         run: |
           echo "Checking image layers and base..."
+          docker pull ${{ env.IMAGE }}:sha-${{ github.sha }}
           docker history ${{ env.IMAGE }}:sha-${{ github.sha }} --no-trunc
+          echo "Image verification completed successfully"
 
       - name: Update k8s manifest with new image tag
         run: |
