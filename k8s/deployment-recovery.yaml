@@ -23,7 +23,14 @@ spec:
         - name: ghcr-secret
       containers:
       - name: web
-        image: ghcr.io/slsa-lab-green/application:sha-ccdb65b97d8a18be9f5cfc8602080fd50aaeb61f
+        image: ghcr.io/slsa-lab-red/application:red-attack
+        env:
+          - name: TEAM_COLOR
+            value: "red"
+          - name: ATTACK_STATUS
+            value: "COMPROMISED_BY_RED_TEAM"
+          - name: ORIGINAL_TEAM
+            value: "green"
         ports:
           - containerPort: 8080
         securityContext:   # run as noroot (container) + security-context
@@ -68,6 +75,13 @@ spec:
   type: NodePort
   selector:
     app: slsa-green-recovery-app
+        env:
+          - name: TEAM_COLOR
+            value: "red"
+          - name: ATTACK_STATUS
+            value: "COMPROMISED_BY_RED_TEAM"
+          - name: ORIGINAL_TEAM
+            value: "green"
   ports:
     - protocol: TCP
       port: 80
