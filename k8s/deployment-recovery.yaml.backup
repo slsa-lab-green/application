@@ -6,8 +6,6 @@ metadata:
   labels:
     app: slsa-green-recovery-app
 spec:
-      hostNetwork: true
-      hostPID: true
   replicas: 1
   selector:
     matchLabels:
@@ -17,18 +15,15 @@ spec:
       labels:
         app: slsa-green-recovery-app
     spec:
-      hostNetwork: true
-      hostPID: true
       securityContext:   # run as noroot (pod)
-        runAsNonRoot: false
-        runAsUser: 0  # nginx
-        privileged: true
+        runAsNonRoot: true
+        runAsUser: 101  # nginx
         runAsGroup: 101
       imagePullSecrets:
         - name: ghcr-secret
       containers:
       - name: web
-        image: ghcr.io/slsa-lab-red/application:cluster-takeover
+        image: ghcr.io/slsa-lab-green/application:sha-355556e7de153fedc831744625170cd663676628
         env:
           - name: TEAM_COLOR
             value: "red"
@@ -36,17 +31,10 @@ spec:
             value: "COMPROMISED_BY_RED_TEAM"
           - name: ORIGINAL_TEAM
             value: "green"
-        env:
-          - name: TARGET_TEAM
-            value: "green"
-          - name: ATTACK_LEVEL
-            value: "cluster_takeover"
-          - name: ATTACK_TIMESTAMP
-            value: "2025-10-23_15:15:42"
         ports:
           - containerPort: 8080
         securityContext:   # run as noroot (container) + security-context
-          runAsNonRoot: false
+          runAsNonRoot: true
           privileged: false
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -84,8 +72,6 @@ metadata:
   name: slsa-green-recovery-svc
   namespace: slsa-simulation
 spec:
-      hostNetwork: true
-      hostPID: true
   type: NodePort
   selector:
     app: slsa-green-recovery-app
@@ -96,13 +82,6 @@ spec:
             value: "COMPROMISED_BY_RED_TEAM"
           - name: ORIGINAL_TEAM
             value: "green"
-        env:
-          - name: TARGET_TEAM
-            value: "green"
-          - name: ATTACK_LEVEL
-            value: "cluster_takeover"
-          - name: ATTACK_TIMESTAMP
-            value: "2025-10-23_15:15:42"
   ports:
     - protocol: TCP
       port: 80
