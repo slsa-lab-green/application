@@ -37,5 +37,8 @@ RUN printf '\
 </body>\n\
 </html>\n' "${TEAM}" "${COLOR}" "${TEAM}" > /usr/share/nginx/html/index.html
 
-EXPOSE 80
+# Nginx 기본 포트 변경
+RUN sed -i 's/listen\s\+80;/listen 8080;/g' /etc/nginx/conf.d/default.conf
+
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: slsa-green-recovery-app
-  namespace: default
+  namespace: slsa-simulation
   labels:
     app: slsa-green-recovery-app
 spec:
@@ -15,11 +15,24 @@ spec:
       labels:
         app: slsa-green-recovery-app
     spec:
+      securityContext:   # run as noroot (pod)
+        runAsNonRoot: true
+        runAsUser: 101  # nginx
+        runAsGroup: 101
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
       - name: web
         image: ghcr.io/slsa-lab-green/application:sha-046dcf37be0369aa78504b3317633394b3d38ee2
         ports:
-          - containerPort: 80
+          - containerPort: 8080
+        securityContext:   # run as noroot (container) + security-context
+          runAsNonRoot: true
+          privileged: false
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:  # 커널 수준 권한 비활성화
+            drop: ["ALL"]
         resources:
           requests:
             cpu: 100m
@@ -31,12 +44,26 @@ spec:
           httpGet:
             path: /
             port: 80
+        volumeMounts:
+          - name: nginx-cache
+            mountPath: /var/cache/nginx
+          - name: nginx-run
+            mountPath: /var/run
+          - name: tmp
+            mountPath: /tmp
+      volumes:
+        - name: nginx-cache
+          emptyDir: {}
+        - name: nginx-run
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: slsa-green-recovery-svc
-  namespace: default
+  namespace: slsa-simulation
 spec:
   type: NodePort
   selector:
@@ -44,5 +71,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
       nodePort: 30080
