@@ -4,24 +4,26 @@ metadata:
   name: slsa-green-recovery-app
   namespace: argocd
 spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: 'https://github.com/slsa-lab-green/application'
+    path: k8s
+    repoURL: https://github.com/slsa-lab-green/application
     targetRevision: main
-    path: k8s 
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: default
+    directory:
+      exclude: "argo-role*.yaml"
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     retry:
-        limit: 5
-        backoff:
-          duration: 5s
-          factor: 2
-          maxDuration: 3m
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+      limit: 5
     syncOptions:
-        - Replace=true 
-        - AllowEmpty=true
+    - Replace=true
+    - AllowEmpty=true
