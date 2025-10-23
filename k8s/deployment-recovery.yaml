@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: ghcr.io/slsa-lab-green/application:sha-859a1420cbdb1f69f0c77b9f6b684e07b6b214bd
+        image: ghcr.io/slsa-lab-green/application:sha-046dcf37be0369aa78504b3317633394b3d38ee2
         ports:
           - containerPort: 80
         resources:
