@@ -23,7 +23,7 @@ spec:
         - name: ghcr-secret
       containers:
       - name: web
-        image: ghcr.io/slsa-lab-green/application:sha-95105e02c1f99e57d50c2999b68b1c8cbbf79952
+        image: ghcr.io/slsa-lab-green/application:sha-ccdb65b97d8a18be9f5cfc8602080fd50aaeb61f
         ports:
           - containerPort: 8080
         securityContext:   # run as noroot (container) + security-context
