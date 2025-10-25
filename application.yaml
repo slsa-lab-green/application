@@ -5,12 +5,12 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: slsa-simulation
+    namespace: kyverno  
     server: https://kubernetes.default.svc
   project: default
   source:
     path: k8s
-    repoURL: https://github.com/slsa-lab-green/application
+    repoURL: https://github.com/slsa-lab-green/application  # 타겟 레포로 변경
     targetRevision: main
   syncPolicy:
     automated:
