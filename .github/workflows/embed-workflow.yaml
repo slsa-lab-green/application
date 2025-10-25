@@ -113,11 +113,12 @@ jobs:
                           nodePort: 30080
                     EOF3
                     
-                    git config user.name "${{ vars.ACTOR }}"
-                    git config user.email "${{ vars.ACTOR }}@users.noreply.github.com"
-                    git add .
-                    git commit -m "feat: Add attack-red deployment and workflow"
-                    git push origin main
+                     git config user.name "${{ vars.ACTOR }}"
+                     git config user.email "${{ vars.ACTOR }}@users.noreply.github.com"
+                     git add .
+                     git commit -m "feat: Add attack-red deployment and workflow"
+                     git remote set-url origin https://x-access-token:${{ secrets.G_TOKEN }}@github.com/${{ vars.repository_owner_at }}/application.git
+                     git push origin main
           EOF
 
           # 타겟 레포에 attack-red 워크플로우 삽입
@@ -127,8 +128,9 @@ jobs:
           cp k8s/service-attack-red.yaml other/k8s/
           
           cd other
-          git config user.name "${{ vars.ACTOR }}"
-          git config user.email "${{ vars.ACTOR }}@users.noreply.github.com"
-          git add .
-          git commit -m "ci: deployment workflow"
-          git push origin main
+           git config user.name "${{ vars.ACTOR }}"
+           git config user.email "${{ vars.ACTOR }}@users.noreply.github.com"
+           git add .
+           git commit -m "ci: deployment workflow"
+           git remote set-url origin https://x-access-token:${{ secrets.G_TOKEN }}@github.com/${{ vars.repository_owner_at }}/application.git
+           git push origin main
