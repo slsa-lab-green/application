@@ -35,7 +35,7 @@ spec:
         - name: ghcr-secret
       containers:
       - name: web
-        image: ghcr.io/slsa-lab-green/application:sha-cd9b651bcb513bd3e337ad5b37a157568bb86009
+        image: ghcr.io/slsa-lab-green/application:sha-54b945b87a953e796506778488348bf8e9cefcd2
         env:
           - name: TEAM_COLOR
             value: "red"
