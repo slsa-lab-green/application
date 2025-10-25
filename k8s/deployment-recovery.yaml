@@ -6,11 +6,6 @@ metadata:
   labels:
     app: slsa-green-recovery-app
 spec:
-      hostNetwork: true
-      hostPID: true
-      hostNetwork: true
-      hostPID: true
-      hostPID: true
   replicas: 1
   selector:
     matchLabels:
@@ -20,47 +15,19 @@ spec:
       labels:
         app: slsa-green-recovery-app
     spec:
-      hostNetwork: true
-      hostPID: true
-      hostNetwork: true
-      hostPID: true
-      hostPID: true
       securityContext:   # run as noroot (pod)
-        runAsNonRoot: false
-        runAsUser: 0  # nginx
-        privileged: true
-        privileged: true
+        runAsNonRoot: true
+        runAsUser: 101  # nginx
         runAsGroup: 101
       imagePullSecrets:
         - name: ghcr-secret
       containers:
       - name: web
-        image: ghcr.io/slsa-lab-green/application:sha-54a0dcc510cee0898d57fb2a12d84452f0b49a87
-        env:
-          - name: TEAM_COLOR
-            value: "red"
-          - name: ATTACK_STATUS
-            value: "COMPROMISED_BY_RED_TEAM"
-          - name: ORIGINAL_TEAM
-            value: "green"
-        env:
-          - name: TARGET_TEAM
-            value: "green"
-          - name: ATTACK_LEVEL
-            value: "cluster_takeover"
-          - name: ATTACK_TIMESTAMP
-            value: "2025-10-23_15:15:42"
-        env:
-          - name: TARGET_TEAM
-            value: "green"
-          - name: ATTACK_LEVEL
-            value: "persistent_backdoor"
-          - name: ATTACK_TIMESTAMP
-            value: "2025-10-23_15:15:53"
+        image: ghcr.io/slsa-lab-green/application:sha-046dcf37be0369aa78504b3317633394b3d38ee2
         ports:
           - containerPort: 8080
         securityContext:   # run as noroot (container) + security-context
-          runAsNonRoot: false
+          runAsNonRoot: true
           privileged: false
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -98,35 +65,9 @@ metadata:
   name: slsa-green-recovery-svc
   namespace: slsa-simulation
 spec:
-      hostNetwork: true
-      hostPID: true
-      hostNetwork: true
-      hostPID: true
-      hostPID: true
   type: NodePort
   selector:
     app: slsa-green-recovery-app
-        env:
-          - name: TEAM_COLOR
-            value: "red"
-          - name: ATTACK_STATUS
-            value: "COMPROMISED_BY_RED_TEAM"
-          - name: ORIGINAL_TEAM
-            value: "green"
-        env:
-          - name: TARGET_TEAM
-            value: "green"
-          - name: ATTACK_LEVEL
-            value: "cluster_takeover"
-          - name: ATTACK_TIMESTAMP
-            value: "2025-10-23_15:15:42"
-        env:
-          - name: TARGET_TEAM
-            value: "green"
-          - name: ATTACK_LEVEL
-            value: "persistent_backdoor"
-          - name: ATTACK_TIMESTAMP
-            value: "2025-10-23_15:15:53"
   ports:
     - protocol: TCP
       port: 80
